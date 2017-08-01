@@ -14,19 +14,18 @@ build:
 
 requirements:
   build:
+    - hdf5
     - python
     - setuptools
-    - numpy x.x
-    - hdf5 1.8.18|1.8.18.*
+    - numpy
     - cython
     - six
     - pkgconfig
 
   run:
+    - hdf5
+    - numpy
     - python
-    - numpy x.x
-    # when this is changed also update bld.bat
-    - hdf5 1.8.18|1.8.18.*
     - six
     - unittest2    # [py26]
 
