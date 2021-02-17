@@ -17,7 +17,7 @@ requirements:
   host:
     - python
     - pip
-    - numpy-devel  {{ numpy }}
+    - numpy-devel  1.14.5
     - hdf5
     - cython
     - six
