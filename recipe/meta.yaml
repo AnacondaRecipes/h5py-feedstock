@@ -1,4 +1,4 @@
-{% set version = "2.10.0" %}
+{% set version = "3.2.0" %}
 
 package:
   name: h5py
@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
-  sha256: 2a8369f74d079dbfe35aebbf56b565a5d2e7bea6d3cdba682b4d456128a23b5e
+  sha256: c3529f01fb1c22eed468664878e74dfa71eb0a5689770c352858be6b467d5729
   patches:  # [not osx]
     - disable-tests.patch  # [not osx]
 
