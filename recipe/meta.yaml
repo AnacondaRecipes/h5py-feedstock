@@ -7,8 +7,6 @@ package:
 source:
   url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
   sha256: c3529f01fb1c22eed468664878e74dfa71eb0a5689770c352858be6b467d5729
-  patches:  # [not osx]
-    - disable-tests.patch  # [not osx]
 
 build:
   number: 0
