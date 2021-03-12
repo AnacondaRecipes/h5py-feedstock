@@ -22,8 +22,6 @@ import h5py.utils
 
 import numpy as np
 
-from sys import exit
-
 # test file read/write, regression test for https://github.com/ContinuumIO/anaconda-issues/issues/7686
 fh = h5py.File('test.h5', 'w')
 fh.create_group('/top')
@@ -36,4 +34,5 @@ fh.close()
 fh = h5py.File('test.h5', 'r')
 fh['/top'].attrs['attr1']
 
-exit(h5py.run_tests())
+#import sys
+#sys.exit(h5py.run_tests())
