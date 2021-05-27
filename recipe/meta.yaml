@@ -1,4 +1,8 @@
-{% set version = "2.10.0" %}
+{% set version = "3.2.1" %}
+{% set build = 0 %}
+
+# mpi must be defined for conda-smithy lint
+{% set mpi = mpi or 'nompi' %}
 
 package:
   name: h5py
@@ -6,12 +10,19 @@ package:
 
 source:
   url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
-  sha256: 2a8369f74d079dbfe35aebbf56b565a5d2e7bea6d3cdba682b4d456128a23b5e
-  patches:  # [not osx]
-    - disable-tests.patch  # [not osx]
+  sha256: bc3d12b0a14deecf67b1c3786e528a6c5a1094150d46c07d0ba42e9d99751fa0
+  patches:
+    # override setup.py specified minimum compatible numpy versions
+    # we take care of those via numpy pinning below
+    - adjust-minimum-numpy-run-versions.patch
+    - osx-arm64.diff    # [osx and arm64]
+    - osx-arm64-hdf5.diff    # [osx and arm64]
 
 build:
-  number: 0
+  skip: True  # [py<=36]
+  number: {{ build }}
+  script_env:
+    - HDF5_HAS_ROS3=1  # [osx and arm64]
 
 requirements:
   build:
@@ -19,38 +30,40 @@ requirements:
   host:
     - python
     - pip
-    - numpy-devel  {{ numpy }}
+    - numpy
     - hdf5
-    - cython
-    - six
+    - cython >=0.29.0  # [py<38]
+    - cython >=0.29.14  # [py>=38]
     - pkgconfig
   run:
     - python
+    - cached-property
+    - {{ pin_compatible('numpy') }}
+    # hdf5 >=1.10.4 has run_exports
     - hdf5
-    - six
-    - unittest2  # [py26 or py27]
     - pyreadline  # [win]
 
 test:
-  requires:
-    - pytest
   imports:
     - h5py
+  commands:
+    - pip check
+  requires:
+    - pip
+    - pytest
+    - pytest-mpi
 
 about:
   home: http://www.h5py.org/
   license: BSD-3-Clause
   license_file: licenses/license.txt
-  summary: Read and write HDF5 files from Python.
-  description: |
-    H5py uses straightforward NumPy and Python metaphors, like dictionary and
-    NumPy array syntax.
-  doc_url: http://docs.h5py.org
+  summary: Read and write HDF5 files from Python
   dev_url: https://github.com/h5py/h5py
 
 extra:
   recipe-maintainers:
     - jakirkham
-    - pitrou
     - tacaswell
     - ocefpaf
+    - minrk
+    - scopatz
