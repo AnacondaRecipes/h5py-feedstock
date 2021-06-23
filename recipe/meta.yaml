@@ -35,7 +35,7 @@ requirements:
     - cython >=0.29.0  # [py<38]
     - cython >=0.29.14  # [py>=38]
     - pkgconfig
-    - patch
+    - patch     #[not win]
     - m2-patch  #[win]
   run:
     - python
