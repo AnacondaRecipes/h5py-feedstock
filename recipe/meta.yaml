@@ -1,4 +1,4 @@
-{% set version = "3.2.1" %}
+{% set version = "3.3.0" %}
 {% set build = 0 %}
 
 # mpi must be defined for conda-smithy lint
@@ -10,7 +10,7 @@ package:
 
 source:
   url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
-  sha256: bc3d12b0a14deecf67b1c3786e528a6c5a1094150d46c07d0ba42e9d99751fa0
+  sha256: d34e362d6e278d583a8fbcdd6628bdb2af4cfa4077d373d767d79cd7911af2b1
   patches:
     # override setup.py specified minimum compatible numpy versions
     # we take care of those via numpy pinning below
@@ -27,6 +27,8 @@ build:
 requirements:
   build:
     - {{ compiler("c") }}
+    - m2-patch  # [win]
+    - patch     # [not win]
   host:
     - python
     - pip
@@ -52,6 +54,7 @@ test:
     - pip
     - pytest
     - pytest-mpi
+    - curl
 
 about:
   home: http://www.h5py.org/
