@@ -37,6 +37,8 @@ requirements:
     - cython >=0.29.0  # [py<38]
     - cython >=0.29.14  # [py>=38]
     - pkgconfig
+    - setuptools
+    - wheel
   run:
     - python
     - cached-property
@@ -48,17 +50,18 @@ requirements:
 test:
   imports:
     - h5py
-  commands:
-    - pip check
   requires:
     - pip
     - pytest
     - pytest-mpi
     - curl
+  commands:
+    - pip check
 
 about:
   home: http://www.h5py.org/
   license: BSD-3-Clause
+  license_family: BSD
   license_file: licenses/license.txt
   summary: Read and write HDF5 files from Python
   dev_url: https://github.com/h5py/h5py
