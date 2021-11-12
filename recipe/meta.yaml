@@ -4,11 +4,6 @@
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
 
-{% if mpi == 'nompi' %}
-# prefer nompi builds via a build number offset
-{% set build = build + 100 %}
-{% endif %}
-
 package:
   name: h5py
   version: {{ version }}
@@ -34,13 +29,10 @@ requirements:
     - {{ compiler("c") }}
     - m2-patch  # [win]
     - patch     # [not win]
-    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]
-  host:
+   host:
     - python
     - pip
     - numpy
-    - {{ mpi }}  # [mpi != 'nompi']
-    - mpi4py >=3.0  # [mpi != 'nompi']
     - hdf5
     - cython >=0.29.0  # [py<38]
     - cython >=0.29.14  # [py==38]
@@ -52,8 +44,6 @@ requirements:
     - python
     - cached-property  # [py<38]
     - {{ pin_compatible('numpy') }}
-    - {{ mpi }}  # [mpi != 'nompi']
-    - mpi4py >=3.0  # [mpi != 'nompi']
     # hdf5 >=1.10.4 has run_exports
     - hdf5
     - pyreadline  # [win]
