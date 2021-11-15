@@ -34,9 +34,7 @@ requirements:
     - pip
     - numpy
     - hdf5
-    - cython >=0.29.0  # [py<38]
-    - cython >=0.29.14  # [py==38]
-    - cython >=0.29.15  # [py>=38]
+    - cython >=0.29.15
     - pkgconfig
     - setuptools
     - wheel
