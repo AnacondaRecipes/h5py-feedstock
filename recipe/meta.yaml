@@ -12,9 +12,6 @@ source:
   url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
   sha256: 840fca0787bca8ad2729b9c20e06a16f219e7a24ccc59fdf5177a05ec8472b2d
   patches:
-    # override setup.py specified minimum compatible numpy versions
-    # we take care of those via numpy pinning below
-    - adjust-minimum-numpy-run-versions.patch
     - osx-arm64.diff    # [osx and arm64]
     - osx-arm64-hdf5.diff    # [osx and arm64]
 
@@ -39,7 +36,7 @@ requirements:
     - setuptools
     - wheel
   run:
-    - python
+    - python >=3.7
     - cached-property  # [py<38]
     - {{ pin_compatible('numpy') }}
     # hdf5 >=1.10.4 has run_exports
@@ -49,6 +46,10 @@ requirements:
 test:
   imports:
     - h5py
+    - h5py._hl
+    - h5py.tests
+    - h5py.tests.data_files
+    - h5py.tests.test_vds
   requires:
     - pip
     - pytest
