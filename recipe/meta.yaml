@@ -41,7 +41,6 @@ requirements:
     - {{ pin_compatible('numpy') }}
     # hdf5 >=1.10.4 has run_exports
     - hdf5
-    - pyreadline  # [win]
 
 test:
   imports:
