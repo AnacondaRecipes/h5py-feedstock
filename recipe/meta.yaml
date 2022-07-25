@@ -55,7 +55,6 @@ test:
     - curl
   commands:
     - pip check
-    - python -c "import h5py; h5py.run_tests()"
 
 about:
   home: https://www.h5py.org/
