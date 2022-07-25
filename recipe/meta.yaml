@@ -12,20 +12,14 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
   sha256: 71ee0e0a25d6acc5e99ff13c287cae006604f6054dd9b60c352d0216e5d6b6f4
-  patches:
-    - osx-arm64-hdf5.diff    # [osx and arm64]
 
 build:
   skip: True  # [py<=36]
   number: {{ build }}
-  script_env:
-    - HDF5_HAS_ROS3=1  # [osx and arm64]
 
 requirements:
   build:
     - {{ compiler("c") }}
-    - m2-patch  # [win]
-    - patch     # [not win]
   host:
     - python
     - cython >=0.29.15
