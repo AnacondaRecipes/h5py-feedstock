@@ -1,16 +1,17 @@
-{% set version = "3.6.0" %}
+{% set name = "h5py" %}
+{% set version = "3.7.0" %}
 {% set build = 0 %}
 
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
 
 package:
-  name: h5py
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/h5py/h5py/archive/{{ version }}.tar.gz
-  sha256: 840fca0787bca8ad2729b9c20e06a16f219e7a24ccc59fdf5177a05ec8472b2d
+  url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
+  sha256: 71ee0e0a25d6acc5e99ff13c287cae006604f6054dd9b60c352d0216e5d6b6f4
   patches:
     - osx-arm64.diff    # [osx and arm64]
     - osx-arm64-hdf5.diff    # [osx and arm64]
@@ -28,25 +29,22 @@ requirements:
     - patch     # [not win]
   host:
     - python
-    - pip
-    - numpy
-    - hdf5
     - cython >=0.29.15
+    - hdf5
+    - numpy
+    - pip
     - pkgconfig
     - setuptools
     - wheel
   run:
-    - python >=3.7
-    - cached-property  # [py<38]
-    - {{ pin_compatible('numpy') }}
+    - python
     # hdf5 >=1.10.4 has run_exports
     - hdf5
-    - pyreadline  # [win]
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
     - h5py
-    - h5py._hl
     - h5py.tests
     - h5py.tests.data_files
     - h5py.tests.test_vds
@@ -57,14 +55,16 @@ test:
     - curl
   commands:
     - pip check
+    - python -c "import h5py; h5py.run_tests()"
 
 about:
-  home: http://www.h5py.org/
+  home: https://www.h5py.org/
   license: BSD-3-Clause
   license_family: BSD
   license_file: licenses/license.txt
   summary: Read and write HDF5 files from Python
   dev_url: https://github.com/h5py/h5py
+  doc_url: https://docs.h5py.org/en/stable/
 
 extra:
   recipe-maintainers:
