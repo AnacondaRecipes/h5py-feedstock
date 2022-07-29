@@ -35,4 +35,3 @@ from sys import exit
 # we have file access issues with the ros3 test
 # exit(h5py.run_tests())
 h5py.run_tests()
-
