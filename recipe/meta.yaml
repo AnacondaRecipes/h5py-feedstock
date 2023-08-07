@@ -24,7 +24,7 @@ requirements:
     - python
     - cython >=0.29.15,<3
     - hdf5 1.12.1
-    - numpy
+    - numpy {{ numpy }}
     - pip
     - pkgconfig
     - setuptools
@@ -53,6 +53,7 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: licenses/license.txt
+  description: Read and write HDF5 files from Python
   summary: Read and write HDF5 files from Python
   dev_url: https://github.com/h5py/h5py
   doc_url: https://docs.h5py.org/en/stable/
