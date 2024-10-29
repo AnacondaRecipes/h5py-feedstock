@@ -31,7 +31,7 @@ requirements:
   run:
     - python
     - hdf5  # exact pin handled through hdf5 run_exports
-    - numpy >=2.0.0, <3
+    - numpy >=1.19.3, <3
 
 test:
   imports:
