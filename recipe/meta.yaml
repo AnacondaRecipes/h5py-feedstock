@@ -1,6 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.9.0" %}
-{% set build = 0 %}
+{% set version = "3.12.1" %}
 
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
@@ -11,28 +10,28 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: ac46f5caae570c9312edea6f65ad4e894e8da44a868b7f263e15265bc3de7a16
+  sha256: ee8d25e6cc6275779a2727258bcce9f2296a58b6e5ccf4cdc467a3c3a97b56b2
 
 build:
-  skip: True  # [py<38]
-  number: {{ build }}
+  skip: True  # [py<39]
+  number: 0
 
 requirements:
   build:
     - {{ compiler("c") }}
   host:
     - python
-    - cython >=0.29.15,<3
+    - cython >=0.29.31,<4
     - hdf5 1.12.1
-    - numpy {{ numpy }}
+    - numpy >=2.0.0, <3
     - pip
     - pkgconfig
-    - setuptools
+    - setuptools >=61
     - wheel
   run:
     - python
     - hdf5  # exact pin handled through hdf5 run_exports
-    - {{ pin_compatible('numpy') }}
+    - numpy >=2.0.0, <3
 
 test:
   imports:
