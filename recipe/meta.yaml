@@ -1,6 +1,7 @@
 {% set name = "h5py" %}
 {% set version = "3.12.1" %}
 
+
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
 
@@ -55,7 +56,7 @@ about:
   description: Read and write HDF5 files from Python
   summary: Read and write HDF5 files from Python
   dev_url: https://github.com/h5py/h5py
-  doc_url: https://docs.h5py.org/en/stable/
+  doc_url: https://docs.h5py.org
 
 extra:
   recipe-maintainers:
