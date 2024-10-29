@@ -1,6 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.11.0" %}
-{% set build = 0 %}
+{% set version = "3.12.1" %}
 
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
@@ -11,30 +10,28 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 034ec21f28f2f2edc4542515a9ae45356a25bb459048acf9622e6b1143b3fae7
+  sha256: ee8d25e6cc6275779a2727258bcce9f2296a58b6e5ccf4cdc467a3c3a97b56b2
 
 build:
-  skip: True  # [py<38]
-  number: {{ build }}
+  skip: True  # [py<39]
+  number: 0
 
 requirements:
   build:
     - {{ compiler("c") }}
   host:
     - python
-    - cython >=0.29.15,<4
+    - cython >=0.29.31,<4
     - hdf5 1.12.1
-    # The upstream source added compatibility to build with numpy 2.0
-    # but it still can be done with numpy 1.x, see https://github.com/h5py/h5py/pull/2401
-    - numpy {{ numpy }}
+    - numpy >=2.0.0, <3
     - pip
     - pkgconfig
-    - setuptools
+    - setuptools >=61
     - wheel
   run:
     - python
     - hdf5  # exact pin handled through hdf5 run_exports
-    - {{ pin_compatible('numpy') }}
+    - numpy >=1.19.3, <3
 
 test:
   imports:
@@ -67,3 +64,8 @@ extra:
     - ocefpaf
     - minrk
     - scopatz
+  # Skipping these, are not relevant to this package
+  skip-lints:
+    - invalid_url
+    - host_section_needs_exact_pinnings
+    - pip_install_args
