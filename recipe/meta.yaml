@@ -1,7 +1,6 @@
 {% set name = "h5py" %}
 {% set version = "3.12.1" %}
 
-
 # mpi must be defined for conda-smithy lint
 {% set mpi = mpi or 'nompi' %}
 
@@ -65,3 +64,8 @@ extra:
     - ocefpaf
     - minrk
     - scopatz
+  # Skipping these, are not relevant to this package
+  skip-lints:
+    - invalid_url
+    - host_section_needs_exact_pinnings
+    - pip_install_args
