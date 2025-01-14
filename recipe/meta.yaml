@@ -14,7 +14,7 @@ source:
 
 build:
   skip: True  # [py<39]
-  number: 0
+  number: 1
 
 requirements:
   build:
@@ -22,7 +22,7 @@ requirements:
   host:
     - python
     - cython >=0.29.31,<4
-    - hdf5 1.12.1
+    - hdf5 1.14.5
     - numpy >=2.0.0, <3
     - pip
     - pkgconfig
