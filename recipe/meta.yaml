@@ -22,7 +22,7 @@ requirements:
   host:
     - python
     - cython >=0.29.31,<4
-    - hdf5 1.14.5
+    - hdf5 {{ hdf5 }}
     - numpy >=2.0.0, <3
     - pip
     - pkgconfig
