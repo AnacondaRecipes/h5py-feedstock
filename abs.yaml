@@ -1,2 +1,1 @@
-channels:
-  - https://staging.continuum.io/prefect/fs/hdf5-feedstock/pr13/88e658e
+pbp_autopublish: false
