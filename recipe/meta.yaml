@@ -1,8 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.12.1" %}
-
-# mpi must be defined for conda-smithy lint
-{% set mpi = mpi or 'nompi' %}
+{% set version = "3.13.0" %}
 
 package:
   name: {{ name|lower }}
@@ -10,11 +7,12 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: ee8d25e6cc6275779a2727258bcce9f2296a58b6e5ccf4cdc467a3c3a97b56b2
+  sha256: d16d0f02e24aed3ba8eb59e406aa44a24f6295c4ad7d85ad4ec6bc0ea176a24e
 
 build:
-  skip: True  # [py<39]
-  number: 1
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<39]
 
 requirements:
   build:
@@ -26,34 +24,47 @@ requirements:
     - numpy >=2.0.0, <3
     - pip
     - pkgconfig
-    - setuptools >=61
+    - setuptools >=77
     - wheel
+    # mpi4py ==3.1.1
+    - mpi4py <=3.1.4  # [py<311]
+    # mpi4py ==3.1.4
+    - mpi4py ==3.1.4  # [py==311]
+    # mpi4py ==3.1.6
+    - mpi4py >=3.1.4,<4  # [py==312]
+    # mpi4py ==4.0.1
+    - mpi4py >=4.0.1,<=4.0.3  # [py>312]
   run:
     - python
-    - hdf5  # exact pin handled through hdf5 run_exports
-    - numpy >=1.19.3, <3
+    - hdf5
+    - numpy >=1.19.3
+    - mpi4py >=3.1.1
 
 test:
   imports:
     - h5py
-    - h5py.tests
-    - h5py.tests.data_files
-    - h5py.tests.test_vds
+    - h5py._hl
+    - h5py._selector
+    - h5py.h5py_warnings
   requires:
     - pip
     - pytest
     - pytest-mpi
-    - curl
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - pytest --pyargs h5py.tests
 
 about:
-  home: https://www.h5py.org/
+  home: https://www.h5py.org
+  summary: The h5py package is a Pythonic interface to the HDF5 binary data format.
   license: BSD-3-Clause
   license_family: BSD
   license_file: licenses/license.txt
-  description: Read and write HDF5 files from Python
-  summary: Read and write HDF5 files from Python
+  description: |
+    HDF5 lets you store huge amounts of numerical data, and easily manipulate that data from NumPy.
+    For example, you can slice into multi-terabyte datasets stored on disk, as if they were real NumPy arrays.
+    Thousands of datasets can be stored in a single file, categorized and tagged however you want.
   dev_url: https://github.com/h5py/h5py
   doc_url: https://docs.h5py.org
 
@@ -64,8 +75,3 @@ extra:
     - ocefpaf
     - minrk
     - scopatz
-  # Skipping these, are not relevant to this package
-  skip-lints:
-    - invalid_url
-    - host_section_needs_exact_pinnings
-    - pip_install_args
