@@ -24,17 +24,17 @@ requirements:
     - numpy >=2.0.0,<3
     - pip
     - pkgconfig
-    - setuptools >=77
+    # decrease setuptools version due to: https://github.com/AnacondaRecipes/numpy-feedstock/blob/master/recipe/meta.yaml#L63
+    - setuptools <74
     # "mpi4py ==3.1.1; python_version<'3.11'"
     - mpi4py <=3.1.4  # [py<311]
     # "mpi4py ==3.1.4; python_version=='3.11.*'"
+    - mpi4py ==3.1.4  # [py==311]
     # "mpi4py ==3.1.6; python_version=='3.12.*'"
-    - mpi4py ==3.1.4  # [py==311 or py==312]
     # "mpi4py ==4.0.1; python_version>='3.13'"
-    - mpi4py >=4.0.1  # [py>312]
+    - mpi4py >=4.0.1  # [py>311]
   run:
     - python
-    - hdf5
     - numpy >=1.19.3
     - mpi4py >=3.1.1
 
