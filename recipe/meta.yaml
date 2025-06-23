@@ -37,7 +37,7 @@ requirements:
   run:
     - python
     - hdf5  # exact pin handled through hdf5 run_exports
-    - numpy >=1.19.3
+    - numpy >=1.19.3,<3
     - mpi4py >=3.1.1
 
 # Failed: DID NOT RAISE <class 'PermissionError'>
