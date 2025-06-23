@@ -26,13 +26,14 @@ requirements:
     - pkgconfig
     - setuptools >=77
     - wheel
-    # "mpi4py ==3.1.1; python_version<'3.11'"
+    # Adjust pinning based on available verions of mpi4py
+    # Upstream: mpi4py ==3.1.1; python_version<'3.11'
     - mpi4py <=3.1.4  # [py<311]
-    # "mpi4py ==3.1.4; python_version=='3.11.*'"
-    - mpi4py ==3.1.4  # [py>=311 or py<313]
-    # "mpi4py ==3.1.6; python_version=='3.12.*'"
-    # "mpi4py ==4.0.1; python_version>='3.13'"
-    - mpi4py >=4.0.1  # [py>=313]
+    # Upstream: mpi4py ==3.1.4; python_version=='3.11.*'
+    - mpi4py ==3.1.4  # [py==311]
+    # Upstream: mpi4py ==3.1.6; python_version=='3.12.*'
+    # Upstream: mpi4py ==4.0.1; python_version>='3.13'
+    - mpi4py >3.1.4  # [py>311]
   run:
     - python
     - hdf5
