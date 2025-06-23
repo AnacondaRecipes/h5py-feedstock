@@ -24,7 +24,8 @@ requirements:
     - numpy {{ numpy }}
     - pip
     - pkgconfig
-    # decrease setuptools version due to numpy run_constrained: https://github.com/AnacondaRecipes/numpy-feedstock/blob/master/recipe/meta.yaml#L63
+    # Decrease setuptools version due to numpy run_constrained: https://github.com/AnacondaRecipes/numpy-feedstock/blob/master/recipe/meta.yaml#L63
+    # Upstream requirement is 'setuptools >=77'
     - setuptools <74
     - wheel
     # Adjust pinning based on available verions of mpi4py
