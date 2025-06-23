@@ -26,6 +26,7 @@ requirements:
     - pkgconfig
     # decrease setuptools version due to: https://github.com/AnacondaRecipes/numpy-feedstock/blob/master/recipe/meta.yaml#L63
     - setuptools <74
+    - wheel
     # "mpi4py ==3.1.1; python_version<'3.11'"
     - mpi4py <=3.1.4  # [py<311]
     # "mpi4py ==3.1.4; python_version=='3.11.*'"
@@ -35,6 +36,7 @@ requirements:
     - mpi4py >=4.0.1  # [py>311]
   run:
     - python
+    - hdf5  # exact pin handled through hdf5 run_exports
     - numpy >=1.19.3
     - mpi4py >=3.1.1
 
@@ -76,6 +78,3 @@ extra:
     - ocefpaf
     - minrk
     - scopatz
-  skip-lints:
-  # wheel is not needed if setuptools>7
-  - missing_wheel
