@@ -51,6 +51,26 @@ test:
     - h5py._hl
     - h5py._selector
     - h5py.h5py_warnings
+    - h5py._conv
+    - h5py._errors
+    - h5py._objects
+    - h5py._proxy
+    - h5py.defs
+    - h5py.h5
+    - h5py.h5a
+    - h5py.h5d
+    - h5py.h5f
+    - h5py.h5fd
+    - h5py.h5g
+    - h5py.h5i
+    - h5py.h5l
+    - h5py.h5o
+    - h5py.h5p
+    - h5py.h5r
+    - h5py.h5s
+    - h5py.h5t
+    - h5py.h5z
+    - h5py.utils
   requires:
     - pip
     - pytest
@@ -58,6 +78,7 @@ test:
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    - python -c "import os,h5py; m=h5py.get_config().mpi; s=os.getenv('mpi','nompi')!='nompi'; assert m==s, f'Expected mpi={s!r}, got {m!r}'"
     - pytest -k "not {{ test_to_skip }}" --pyargs h5py.tests
 
 about:
