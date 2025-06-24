@@ -1,5 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.13.0" %}
+{% set version = "3.14.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,17 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: d16d0f02e24aed3ba8eb59e406aa44a24f6295c4ad7d85ad4ec6bc0ea176a24e
+  sha256: 4937c1cbef049fd28973494def11084b70c1d218c6898a9d8cfb471c84010a99
+  patches:
+    - patches/0001-fix-license-in-pyproject.toml.patch
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<39]
+  build:
+    - patch  # [not win]
+    - m2-patch  # [win]
 
 requirements:
   build:
