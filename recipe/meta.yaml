@@ -1,5 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.13.0" %}
+{% set version = "3.14.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,12 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: d16d0f02e24aed3ba8eb59e406aa44a24f6295c4ad7d85ad4ec6bc0ea176a24e
+  sha256: 4937c1cbef049fd28973494def11084b70c1d218c6898a9d8cfb471c84010a99
+  patches:
+    - patches/0001-fix-license-in-pyproject.toml.patch
+    # Disable complex256 for arm64
+    # follow https://github.com/conda-forge/cross-python-feedstock/issues/92
+    - patches/0002-disable-numpy-complex256-osx-arm.patch   # [osx and arm64]
 
 build:
   number: 0
@@ -16,6 +21,8 @@ build:
 
 requirements:
   build:
+    - patch  # [not win]
+    - m2-patch  # [win]
     - {{ compiler("c") }}
   host:
     - python
@@ -86,7 +93,10 @@ about:
   summary: The h5py package is a Pythonic interface to the HDF5 binary data format.
   license: BSD-3-Clause
   license_family: BSD
-  license_file: licenses/license.txt
+  license_file:
+    - licenses/license.txt
+    - LICENSE
+    - lzf/LICENSE.txt
   description: |
     HDF5 lets you store huge amounts of numerical data, and easily manipulate that data from NumPy.
     For example, you can slice into multi-terabyte datasets stored on disk, as if they were real NumPy arrays.

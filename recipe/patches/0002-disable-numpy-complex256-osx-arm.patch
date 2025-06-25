@@ -1,0 +1,25 @@
+From 3ad69c46f478d466bdbb18b3944726fafe1b4516 Mon Sep 17 00:00:00 2001
+From: PatrykKups <pkups@anaconda.com>
+Date: Wed, 25 Jun 2025 13:30:17 +0200
+Subject: [PATCH] disable numpy complex256 osx arm
+
+---
+ setup_build.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup_build.py b/setup_build.py
+index 9b4766e..56df539 100644
+--- a/setup_build.py
++++ b/setup_build.py
+@@ -142,7 +142,7 @@ class h5py_build_ext(build_ext):
+         from Cython.Build import cythonize
+         import numpy
+ 
+-        complex256_support = hasattr(numpy, 'complex256')
++        complex256_support = False
+ 
+         # This allows ccache to recognise the files when pip builds in a temp
+         # directory. It speeds up repeatedly running tests through tox with
+-- 
+2.39.5 (Apple Git-154)
+
