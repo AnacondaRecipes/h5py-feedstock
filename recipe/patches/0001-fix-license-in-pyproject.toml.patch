@@ -1,6 +1,6 @@
-From bac2f3ee35f1d13be0e90301365c93accb27a3f4 Mon Sep 17 00:00:00 2001
-From: PatrykKups <pkups@anaconda.com>
-Date: Tue, 24 Jun 2025 20:37:46 +0200
+From 5579f5632760bf852988c08e89c650dcdfed9ad3 Mon Sep 17 00:00:00 2001
+From: Patryk Kups <pkups@anaconda.com>
+Date: Tue, 4 Nov 2025 13:51:23 +0100
 Subject: [PATCH] patch
 
 ---
@@ -8,10 +8,10 @@ Subject: [PATCH] patch
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/pyproject.toml b/pyproject.toml
-index 45d3da8..f8abaa3 100644
+index 604efb9..3d156ca 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -19,8 +19,7 @@ maintainers = [
+@@ -22,8 +22,7 @@ maintainers = [
      {name = "Thomas Kluyver", email = "thomas@kluyver.me.uk"},
      {name = "Thomas A Caswell", email = "tcaswell@bnl.gov"},
  ]
