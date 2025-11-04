@@ -1,5 +1,6 @@
 {% set name = "h5py" %}
-{% set version = "3.14.0" %}
+{% set version = "3.15.1" %}
+{% set test_to_skip = "test_append_permissions" %}
 
 package:
   name: {{ name|lower }}
@@ -7,34 +8,34 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 4937c1cbef049fd28973494def11084b70c1d218c6898a9d8cfb471c84010a99
+  sha256: 55a03d8fc1db535b243cccda3e6237844da25a17a2df3bc0ea9db6fbbbd7bf2b
   patches:
     - patches/0001-fix-license-in-pyproject.toml.patch
     # Disable complex256 for arm64
     # follow https://github.com/conda-forge/cross-python-feedstock/issues/92
-    - patches/0002-disable-numpy-complex256-osx-arm.patch   # [osx and arm64]
+    - patches/0002-disable-numpy-complex256-osx-arm.patch  # [osx and arm64]
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   build:
     - patch  # [not win]
     - m2-patch  # [win]
     - {{ compiler("c") }}
+    - {{ compiler('c') }}
   host:
     - python
-    - cython >=0.29.31,<4
+    - cython >=3.0.0,<4
     - hdf5 {{ hdf5 }}
     - numpy {{ numpy }}
     - pip
-    - pkgconfig
+    - pkgconfig >=1.5.5
     # Decrease setuptools version due to numpy run_constrained: https://github.com/AnacondaRecipes/numpy-feedstock/blob/master/recipe/meta.yaml#L63
     # Upstream requirement is 'setuptools >=77'
-    - setuptools <74
-    - wheel
+    - setuptools >=77.0.1
     # Adjust pinning based on available verions of mpi4py
     # Upstream: mpi4py ==3.1.1; python_version<'3.11'
     - mpi4py <=3.1.4  # [py<311]
@@ -43,15 +44,15 @@ requirements:
     # Upstream: mpi4py ==3.1.6; python_version=='3.12.*'
     # Upstream: mpi4py ==4.0.1; python_version>='3.13'
     - mpi4py >3.1.4  # [py>311]
+    - numpy >=1.25.0,<3
   run:
     - python
     - hdf5
     - numpy >=1.19.3
     - mpi4py >=3.1.1
+    - {{ pin_compatible('numpy') }}
 
 # Failed: DID NOT RAISE <class 'PermissionError'>
-{% set test_to_skip = "test_append_permissions" %}
-
 test:
   imports:
     - h5py
