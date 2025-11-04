@@ -1,6 +1,6 @@
-From 5579f5632760bf852988c08e89c650dcdfed9ad3 Mon Sep 17 00:00:00 2001
+From 975f16c48e77a7b3164dfc1d6373c9b1ebe01a37 Mon Sep 17 00:00:00 2001
 From: Patryk Kups <pkups@anaconda.com>
-Date: Tue, 4 Nov 2025 13:51:23 +0100
+Date: Tue, 4 Nov 2025 14:37:06 +0100
 Subject: [PATCH] patch
 
 ---
@@ -22,5 +22,5 @@ index 604efb9..3d156ca 100644
      "Development Status :: 5 - Production/Stable",
      "Intended Audience :: Developers",
 -- 
-2.39.5 (Apple Git-154)
+2.49.0.windows.1
 
