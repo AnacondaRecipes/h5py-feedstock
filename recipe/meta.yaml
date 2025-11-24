@@ -28,7 +28,7 @@ requirements:
     - pip
     - setuptools >=77.0.1
     - cython >=3.0.0,<4
-    - hdf5
+    - hdf5 {{ hdf5 }}
     - pkgconfig >=1.5.5
     - numpy >=1.25.0,<3
   run:
