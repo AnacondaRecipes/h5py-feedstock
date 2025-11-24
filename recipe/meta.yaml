@@ -30,7 +30,7 @@ requirements:
     - cython >=3.0.0,<4
     - hdf5 {{ hdf5 }}
     - pkgconfig >=1.5.5
-    - numpy >=1.25.0,<3
+    - numpy {{ numpy }}
   run:
     - python
     - hdf5
