@@ -1,5 +1,6 @@
 {% set name = "h5py" %}
 {% set version = "3.15.1" %}
+{% set test_to_skip = "test_append_permissions" %}
 
 package:
   name: {{ name|lower }}
@@ -15,7 +16,7 @@ source:
     - patches/0002-disable-numpy-complex256-osx-arm.patch  # [osx and arm64]
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -38,8 +39,6 @@ requirements:
     - mpi4py >=3.1.2
 
 # Failed: DID NOT RAISE <class 'PermissionError'>
-{% set test_to_skip = "test_append_permissions" %}
-
 test:
   imports:
     - h5py
