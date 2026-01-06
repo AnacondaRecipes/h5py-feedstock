@@ -1,6 +1,5 @@
 {% set name = "h5py" %}
 {% set version = "3.15.1" %}
-{% set test_to_skip = "test_append_permissions" %}
 
 package:
   name: {{ name|lower }}
@@ -39,6 +38,8 @@ requirements:
     - mpi4py >=3.1.2
 
 # Failed: DID NOT RAISE <class 'PermissionError'>
+{% set test_to_skip = "test_append_permissions" %}
+
 test:
   imports:
     - h5py
