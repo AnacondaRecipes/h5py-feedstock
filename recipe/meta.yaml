@@ -1,13 +1,22 @@
 {% set name = "h5py" %}
-{% set version = "3.15.1" %}
+{% set version = "3.16.0" %}
+{% set test_to_skip = "" %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_file2.py::TestCache::test_defaults"' %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_file2.py::TestCache::test_nbytes"' %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_file2.py::TestCache::test_w0"' %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_ros3.py::test_ros3_s3_fails[HDF5-v2]"' %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_ros3.py::test_ros3[HDF5-v2]"' %}
+{% set test_to_skip = 'test_to_skip + " --deselect=test_ros3.py::test_ros3_s3uri"' %}
 
+# AssertionError: Lists differ
+# AssertionError: Regex pattern did not match.
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 55a03d8fc1db535b243cccda3e6237844da25a17a2df3bc0ea9db6fbbbd7bf2b
+  sha256: 9c3aa5e1fc0c33ae8501a17987af2f986c8ba3ade25da66c78738a5abefea133
   patches:
     - patches/0001-fix-license-in-pyproject.toml.patch
     # Disable complex256 for arm64
@@ -15,7 +24,7 @@ source:
     - patches/0002-disable-numpy-complex256-osx-arm.patch  # [osx and arm64]
 
 build:
-  number: 2
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -23,6 +32,7 @@ requirements:
   build:
     - {{ stdlib('c') }}
     - {{ compiler("c") }}
+    - {{ compiler('c') }}
   host:
     - python
     - pip
@@ -31,21 +41,14 @@ requirements:
     - hdf5 {{ hdf5 }}
     - pkgconfig >=1.5.5
     - numpy {{ numpy }}
+    - numpy >=1.25.0,<3
+    - packaging >=23.0
   run:
     - python
     - hdf5
     - numpy >=1.21.2
     - mpi4py >=3.1.2
-
-{% set test_to_skip = "" %}
-# AssertionError: Lists differ
-{% set test_to_skip = test_to_skip + " --deselect=test_file2.py::TestCache::test_defaults" %}
-{% set test_to_skip = test_to_skip + " --deselect=test_file2.py::TestCache::test_nbytes" %}
-{% set test_to_skip = test_to_skip + " --deselect=test_file2.py::TestCache::test_w0" %}
-# AssertionError: Regex pattern did not match.
-{% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3_s3_fails[HDF5-v2]" %}
-{% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3[HDF5-v2]" %}
-{% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3_s3uri" %}
+    - {{ pin_compatible('numpy') }}
 
 test:
   imports:
