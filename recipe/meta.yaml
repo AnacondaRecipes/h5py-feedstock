@@ -1,5 +1,5 @@
 {% set name = "h5py" %}
-{% set version = "3.15.1" %}
+{% set version = "3.16.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 55a03d8fc1db535b243cccda3e6237844da25a17a2df3bc0ea9db6fbbbd7bf2b
+  sha256: 9c3aa5e1fc0c33ae8501a17987af2f986c8ba3ade25da66c78738a5abefea133
   patches:
     - patches/0001-fix-license-in-pyproject.toml.patch
     # Disable complex256 for arm64
@@ -15,7 +15,7 @@ source:
     - patches/0002-disable-numpy-complex256-osx-arm.patch  # [osx and arm64]
 
 build:
-  number: 2
+  number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -24,8 +24,8 @@ requirements:
     - {{ stdlib('c') }}
     - {{ compiler("c") }}
   host:
-    - python
     - pip
+    - python
     - setuptools >=77.0.1
     - cython >=3.0.0,<4
     - hdf5 {{ hdf5 }}
