@@ -49,6 +49,9 @@ requirements:
 {% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3[HDF5-v2]" %}
 {% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3_s3uri" %}
 
+# No MPI support on win-arm64
+{% set test_to_skip = test_to_skip + " --deselect=test_file.py::TestMPI" %}  # [win and arm64]
+
 test:
   imports:
     - h5py
