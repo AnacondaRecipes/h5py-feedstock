@@ -15,7 +15,7 @@ source:
     - patches/0002-disable-numpy-complex256-osx-arm.patch  # [osx and arm64]
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<310]
 
@@ -35,7 +35,9 @@ requirements:
     - python
     - hdf5
     - numpy >=1.21.2
-    - mpi4py >=3.1.2
+    # mpi4py depends on msmpi, which is unmaintained and has no win-arm64 support.
+    # The win-arm64 build is serial (non-MPI), so mpi4py is not needed there.
+    - mpi4py >=3.1.2  # [not (win and arm64)]
 
 {% set test_to_skip = "" %}
 # AssertionError: Lists differ
@@ -46,6 +48,9 @@ requirements:
 {% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3_s3_fails[HDF5-v2]" %}
 {% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3[HDF5-v2]" %}
 {% set test_to_skip = test_to_skip + " --deselect=test_ros3.py::test_ros3_s3uri" %}
+
+# No MPI support on win-arm64
+{% set test_to_skip = test_to_skip + " --deselect=test_file.py::TestMPI" %}  # [win and arm64]
 
 test:
   imports:
@@ -76,7 +81,8 @@ test:
   requires:
     - pip
     - pytest
-    - pytest-mpi
+    # pytest-mpi pulls in mpi4py, unavailable on win-arm64 (see run requirements)
+    - pytest-mpi  # [not (win and arm64)]
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
